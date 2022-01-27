@@ -25,6 +25,11 @@ def search(letters_remaining, solutions, candidate_words=set()):
         solutions.add(solution)
         return
 
+    # Exit case:
+    # - We selected six five-letter words but did not consume all letters
+    if len(candidate_words) == 6:
+        return
+
     # Recursive case: find words without overlapping letters and search those
     for word in words:
         if any(letter not in letters_remaining for letter in word):
