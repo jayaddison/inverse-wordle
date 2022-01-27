@@ -20,7 +20,6 @@ def search(letters_remaining, solutions, candidate_words=set()):
     # Goal case:
     # - We have found six five-letter words without overlapping letters
     # - We have consumed all of the letters available
-    print(candidate_words)
     if len(candidate_words) == 6 and len(letters_remaining) == 0:
         solution = ",".join(sorted(candidate_words))
         solutions.add(solution)
