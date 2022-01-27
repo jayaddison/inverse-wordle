@@ -45,4 +45,7 @@ def search(letters_remaining, solutions, candidate_words=set()):
 
 solutions = set()
 search(set(ascii_lowercase), solutions)
+
+# dictionary: wamerican version 2019.10.06-1
+# {'fitch,japan,kudzu,mysql,oxbow,verge'}
 print(solutions)
