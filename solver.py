@@ -39,8 +39,11 @@ def search(letters_remaining, solutions, candidate_words=set()):
         letters = set(word)
         if not letters.issubset(letters_remaining):
             continue
-        reduced_letters = letters_remaining.copy() - letters
-        search(reduced_letters, solutions, candidate_words | {word})
+        search(
+            letters_remaining=letters_remaining.copy() - letters,
+            solutions=solutions,
+            candidate_words=candidate_words | {word},
+        )
 
 
 solutions = set()
