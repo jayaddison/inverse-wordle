@@ -10,9 +10,10 @@ for word in dictionary.readlines():
     word = word.strip().lower()
     if len(word) != 5:
         continue
-    if any(letter not in ascii_lowercase for letter in word):
+    letters = set(word)
+    if not letters.issubset(ascii_lowercase):
         continue
-    vowels_in_word = set(vowels) & set(word)
+    vowels_in_word = set(vowels) & set(letters)
     if len(vowels_in_word) != 1:
         continue
     words_by_vowel[vowels_in_word.pop()].add(word)
@@ -35,11 +36,10 @@ def search(letters_remaining, solutions, candidate_words=set()):
     # Recursive case: find words without overlapping letters and search those
     vowel = vowels[len(candidate_words)]
     for word in words_by_vowel[vowel]:
-        if any(letter not in letters_remaining for letter in word):
+        letters = set(word)
+        if not letters.issubset(letters_remaining):
             continue
-        reduced_letters = letters_remaining.copy()
-        for letter in word:
-            reduced_letters.discard(letter)
+        reduced_letters = letters_remaining.copy() - letters
         search(reduced_letters, solutions, candidate_words | {word})
 
 
