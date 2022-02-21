@@ -1,7 +1,8 @@
+from collections import defaultdict
 from string import ascii_lowercase
 
 dictionary = open("/usr/share/dict/words", "r")
-words = set()
+words_by_vowel = defaultdict(set)
 vowels = ["a", "e", "i", "o", "u", "y"]
 
 # Collect alphabetical words of length five containing no more than one vowel
@@ -11,9 +12,10 @@ for word in dictionary.readlines():
         continue
     if any(letter not in ascii_lowercase for letter in word):
         continue
-    if len(set(vowels) & set(word)) > 1:
+    vowels_in_word = set(vowels) & set(word)
+    if len(vowels_in_word) != 1:
         continue
-    words.add(word)
+    words_by_vowel[vowels_in_word.pop()].add(word)
 
 
 def search(letters_remaining, solutions, candidate_words=set()):
@@ -32,9 +34,7 @@ def search(letters_remaining, solutions, candidate_words=set()):
 
     # Recursive case: find words without overlapping letters and search those
     vowel = vowels[len(candidate_words)]
-    for word in words:
-        if vowel not in word:
-            continue
+    for word in words_by_vowel[vowel]:
         if any(letter not in letters_remaining for letter in word):
             continue
         reduced_letters = letters_remaining.copy()
